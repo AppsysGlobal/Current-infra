@@ -22,6 +22,6 @@
         destination_port: 80
         jump: ACCEPT
 
-    - name: Save iptables rules
-      ansible.builtin.command: iptables-save > /etc/iptables/rules.v4
+    - - name: Save iptables rules
+  shell: iptables-save > /etc/iptables/rules.v4
       when: ansible_facts.os_family == "Debian"
