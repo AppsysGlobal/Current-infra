@@ -15,13 +15,14 @@
         state: started
         enabled: true
 
-    - name: Open port 80 with iptables
-      ansible.builtin.iptables:
-        chain: INPUT
-        protocol: tcp
-        destination_port: 80
-        jump: ACCEPT
+    - name: Open port 80 via iptables (OCI typically doesn't use UFW)
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 80
+    jump: ACCEPT
 
-    - - name: Save iptables rules
+- name: Save iptables rules
   shell: iptables-save > /etc/iptables/rules.v4
-      when: ansible_facts.os_family == "Debian"
+  when: ansible_facts.os_family == "Debian"
+
