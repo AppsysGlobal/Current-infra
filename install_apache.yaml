@@ -23,8 +23,8 @@
       ignore_errors: yes
 
     - name: Open port 80 via iptables
-      ansible.builtin.shell: iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+      shell: "iptables -I INPUT -p tcp --dport 80 -j ACCEPT"
 
     - name: Save iptables rules
-      ansible.builtin.shell: iptables-save > /etc/iptables/rules.v4
+      shell: "iptables-save > /etc/iptables/rules.v4"
       when: ansible_facts.os_family == "Debian"
