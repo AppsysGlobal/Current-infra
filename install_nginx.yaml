@@ -10,7 +10,7 @@
         state: present
         update_cache: yes
 
-    - name: Copy index.html to NGINX root
+    - name: Copy custom index.html
       copy:
         src: index.html
         dest: /var/www/html/index.html
@@ -18,7 +18,8 @@
         group: www-data
         mode: '0644'
 
-    - name: Restart NGINX
+    - name: Ensure NGINX is running
       service:
         name: nginx
-        state: restarted
+        state: started
+        enabled: yes
