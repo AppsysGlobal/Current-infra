@@ -1,23 +1,21 @@
 pipeline {
-    agent any
+  agent any
 
-    environment {
-        ANSIBLE_HOST_KEY_CHECKING = 'False'
+  stages {
+    stage('Checkout from GitHub') {
+      steps {
+        // GitHub SCM already configured in Jenkins job UI
+        echo 'Checked out source from GitHub'
+      }
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/AppsysGlobal/Current-infra.git'
-            }
-        }
-
-        stage('Run Ansible Playbook') {
-            steps {
-                sh '''
-                    ansible-playbook -i inventory.ini install_apache.yaml
-                '''
-            }
-        }
+    stage('Run Ansible Playbook') {
+      steps {
+        echo 'Running Ansible to install NGINX and deploy index.html'
+        sh '''
+          ansible-playbook -i hosts nginx.yml
+        '''
+      }
     }
+  }
 }
