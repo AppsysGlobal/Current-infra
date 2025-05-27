@@ -13,7 +13,7 @@ pipeline {
       steps {
         echo 'Running Ansible to install NGINX and deploy index.html'
         sh '''
-          ansible-playbook -i hosts nginx.yml
+          ansible-playbook -i hosts install_nginx.yaml
         '''
       }
     }
