@@ -14,7 +14,7 @@ pipeline {
         echo 'Running Ansible to install NGINX + PHP + Deploy HTML/PHP'
 
         sh '''
-          ansible-playbook -i inventory.ini install_nginx.yaml
+          ansible-playbook -i inventory.ini install_webapp.yaml
         '''
       }
     }
