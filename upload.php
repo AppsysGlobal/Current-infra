@@ -1,11 +1,11 @@
 <?php
-putenv("HOME=/var/www");
+putenv("HOME=/var/www");  // set home so it looks for /var/www/.oci/config
 putenv("OCI_CLI_AUTH=api_key");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $target = "/tmp/" . basename($_FILES['file']['name']);
     if (move_uploaded_file($_FILES['file']['tmp_name'], $target)) {
-        $cmd = "sudo /home/ubuntu/bin/oci os object put -bn bucket-20250521-1835 --file {$target} --namespace idyhabl91i8j";
+        $cmd = "/home/ubuntu/bin/oci os object put -bn bucket-20250521-1835 --file {$target} --namespace idyhabl91i8j --config-file /var/www/.oci/config";
         $output = shell_exec($cmd);
         $message = "✅ File uploaded and sent to Object Storage.<br><pre>$output</pre>";
     } else {
