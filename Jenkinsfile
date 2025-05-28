@@ -2,20 +2,30 @@ pipeline {
   agent any
 
   stages {
-    stage('Checkout from GitHub') {
+    stage('Pull Latest Code') {
       steps {
-        // GitHub SCM already configured in Jenkins job UI
-        echo 'Checked out source from GitHub'
+        echo 'Fetching from GitHub (already configured via SCM plugin)'
+        // No need to manually pull, Jenkins SCM is configured
       }
     }
 
     stage('Run Ansible Playbook') {
       steps {
-        echo 'Running Ansible to install NGINX and deploy index.html'
+        echo 'Running Ansible to install NGINX + PHP + Deploy HTML/PHP'
+
         sh '''
-          ansible-playbook -i hosts install_nginx.yaml
+          ansible-playbook -i inventory.ini install_nginx.yaml
         '''
       }
+    }
+  }
+
+  post {
+    success {
+      echo '✅ Web server deployed successfully.'
+    }
+    failure {
+      echo '❌ Deployment failed. Please check the logs.'
     }
   }
 }
