@@ -89,12 +89,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h2>📤 Upload File to OCI Object Storage</h2>
 
         <form method="post" enctype="multipart/form-data">
-            <label class="custom-file-upload">
-                <input type="file" name="file" required />
-                📁 Select File
-            </label><br>
-            <input type="submit" value="🚀 Upload" />
-        </form>
+    <label class="custom-file-upload">
+        <input type="file" name="file" id="fileInput" required onchange="showFileName()" />
+        📁 Select File
+    </label>
+    <div id="fileName" style="margin-top: 10px; color: #333;"></div>
+    <input type="submit" value="🚀 Upload" />
+</form>
+
+<script>
+function showFileName() {
+    const input = document.getElementById('fileInput');
+    const fileNameDiv = document.getElementById('fileName');
+    if (input.files.length > 0) {
+        fileNameDiv.textContent = '📄 Selected: ' + input.files[0].name;
+    }
+}
+</script>
+
 
         <?php if ($upload_status): ?>
             <div class="status"><?= htmlspecialchars($upload_status) ?></div>
