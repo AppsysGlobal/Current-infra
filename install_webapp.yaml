@@ -1,0 +1,34 @@
+---
+- name: Deploy Web App to Apache Web Root
+  hosts: localhost
+  become: yes
+  tasks:
+
+    - name: Ensure /var/www/html exists
+      file:
+        path: /var/www/html
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: Copy index.html to Apache web root
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Copy upload.php to Apache web root
+      copy:
+        src: upload.php
+        dest: /var/www/html/upload.php
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Restart Apache2 to ensure new config is active
+      service:
+        name: apache2
+        state: restarted
